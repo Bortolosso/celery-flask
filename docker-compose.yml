@@ -20,7 +20,7 @@ services:
 
   beat:
     build: .
-    command: celery beat --app project.server.tasks.celery --schedule=/tmp/celerybeat-schedule --loglevel=INFO --pidfile=/tmp/celerybeat.pid
+    command: celery --app project.server.tasks.celery beat --schedule=project/tmp/celerybeat-schedule --loglevel=INFO --pidfile=project/tmp/celerybeat.pid
     volumes:
       - .:/usr/src/app
     environment:
@@ -48,7 +48,7 @@ services:
 
   celery-queues:
     build: .
-    command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=GET_ALL_SHEETS@%h
+    command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=SMARSHEET_GET_ALL_SHEETS@%h
     volumes:
       - .:/usr/src/app
     environment:

@@ -7,6 +7,7 @@ from project.server.blueprint import main_blueprint
 from project.server.tasks import create_task, get_all_sheets
 
 
+# Routes for tests
 @main_blueprint.route("/", methods=["GET"])
 def home():
     return render_template("main/home.html")
@@ -26,18 +27,17 @@ def get_status(task_id):
     result = {
         "task_id": task_id,
         "task_status": task_result.status,
-        "task_result": task_result.result
+        "task_result": task_result.result,
     }
     return jsonify(result), 200
 
 
 # Route o run workes SmartSheet
-@main_blueprint.route("/sheets", methods=["POST"])
-def sheets():
+@main_blueprint.route("/smartsheet/get-all-sheets", methods=["POST"])
+def smartsheet_get_all_sheets():
     content = request.json
-    task_type = content["type"]
-    print(content)
-    
-    task_ = get_all_sheets.delay()
-    
-    return jsonify({"task_id": task_.id}), 202
+
+    # task_ = get_all_sheets.delay()
+    task_ = get_all_sheets()
+
+    return jsonify({"task_id": "task_"}), 202

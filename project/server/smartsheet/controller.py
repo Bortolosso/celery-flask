@@ -1,6 +1,18 @@
 from project.server.smartsheet.api import request_all_sheets
 from project.server.dbconnect import connect_db
 
+QUERY_TEST = """
+SELECT TOP (100) [ID_Carga]
+      ,[DtCarga]
+      ,[Processamento]
+      ,[ID_Configuracao]
+      ,[Etapa]
+      ,[Descricao]
+      ,[Tempo]
+      ,[QtdeLinhas]
+      ,[Usuario]
+  FROM [DB_Grower].[dbo].[TL_CargaDados]
+"""
 
 def return_controller():
     data = payload()
@@ -10,15 +22,14 @@ def return_controller():
 
 def payload():
     response_data = request_all_sheets()
+    
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    cursor.execute(QUERY_TEST)
+    row = cursor.fetchall()
 
-    cursor = connect_db()
-    cursor.execute(
-        "SELECT TOP (10) [Id], [AccountId], [AssistantName] FROM [DB_Grower].[etl].[TS_FIELO_Contact]"
-    )
-    row = cursor.fetchone()
-
-    while row:
-        print(row)
-        # row = cursor.fetchone()
+    cursor.close()
+    # print(row)
 
     return "SUCCESS"

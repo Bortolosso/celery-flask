@@ -1,14 +1,17 @@
+import os
 import pyodbc
 
 
 def connect_db():
-   conn = pyodbc.connect(
-      "Driver={ODBC Driver 17 for SQL Server};"
-      "Server=BRAZIWADBP006.syngentaazure.org;"
-      "Database=DB_Grower;"
-      "UID=python_user;"
-      "PWD=Syngenta2020Syngenta2020;"
+   str_conn = ("Driver={0};" "Server={1};" "Database={2};" "UID={3};" "PWD={4};").format(
+      os.environ.get("DB_DRIVER", "{ODBC Driver 17 for SQL Server}"),
+      os.environ.get("DB_SERVER", ""),
+      os.environ.get("DB_DATABASE", ""),
+      os.environ.get("DB_USER_UID", ""),
+      os.environ.get("DB_PASSWORD", "")
    )
-   cursor = conn.cursor()
    
-   return cursor
+   print(str_conn)
+   conn = pyodbc.connect(str_conn)
+   
+   return conn

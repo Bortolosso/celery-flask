@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# celery --app project.server.celery.celery worker -Q init_sheet -c 2
+

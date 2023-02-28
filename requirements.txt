@@ -1,0 +1,11 @@
+Flask
+Flask-WTF
+pytest
+redis
+black
+celery
+flower
+requests
+pymssql
+pyodbc
+python-dotenv

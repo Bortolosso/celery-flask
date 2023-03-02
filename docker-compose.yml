@@ -46,9 +46,37 @@ services:
       - web
       - redis
 
-  celery-queues:
+  celery-queues-get_all_sheets:
     build: .
     command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=SMARTSHEET_SHEETS@%h
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=project.server.config.DevelopmentConfig
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
+  celery-queues-add:
+    build: .
+    command: celery --app project.server.tasks.celery worker -Q add --hostname=TEST_ADD_REGISTERS_END_TO_END@%h
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=project.server.config.DevelopmentConfig
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
+  celery-queues-smartsheet_get_sheet_syngenta_direct:
+    build: .
+    command: celery --app project.server.tasks.celery worker -Q smartsheet_get_sheet_syngenta_direct --hostname=SMARTSHEET_SHEET_SYNGENTA_DIRECT@%h
     volumes:
       - .:/usr/src/app
     environment:

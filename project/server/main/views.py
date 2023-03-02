@@ -4,7 +4,7 @@ from celery.result import AsyncResult
 from flask import render_template, jsonify, request
 
 from project.server.blueprint import main_blueprint
-from project.server.tasks import create_task, get_all_sheets
+from project.server.tasks import add, get_all_sheets
 
 
 # Routes for tests
@@ -13,11 +13,13 @@ def home():
     return render_template("main/home.html")
 
 
-@main_blueprint.route("/tasks", methods=["POST"])
+@main_blueprint.route("/add", methods=["POST"])
 def run_task():
     content = request.json
     task_type = content["type"]
-    task = create_task.delay(int(task_type))
+    
+    task = add.delay(1, 1)
+    
     return jsonify({"task_id": task.id}), 202
 
 
@@ -37,9 +39,7 @@ def get_status(task_id):
 @main_blueprint.route("/smartsheet/sheets", methods=["POST"])
 def smartsheet_get_all_sheets():
     content = request.json
-
-    task_ = get_all_sheets.apply_async()
-    # task_ = get_all_sheets()
+    task_ = get_all_sheets.delay()
 
     return jsonify({"task_id": "get_all_sheets"}), 202
 
@@ -47,8 +47,6 @@ def smartsheet_get_all_sheets():
 @main_blueprint.route("/smartsheet/sheet-syngenta-direct", methods=["POST"])
 def smartsheet_get_sheet_syngenta_direct():
     content = request.json
-
-    # task_ = get_all_sheets.delay()
-    task_ = get_all_sheets()
+    task_ = get_all_sheets.delay()
 
     return jsonify({"task_id": "get_sheet_syngenta_dinamic"}), 202

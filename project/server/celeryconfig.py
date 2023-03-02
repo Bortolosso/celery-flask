@@ -13,34 +13,24 @@ timezone = 'America/Sao_Paulo'
 enable_utc = True
 task_default_exchange = "default"
 task_default_exchange_type = "topic"
-task_default_routing_key = "task.default"
+task_default_routing_key = "tasks.default"
 task_default_queue = 'default'
-task_routes = {
-   'project.server.tasks.get_all_sheets': {
-      'queue': 'get_all_sheets', 
-      'routing_key': 'task.sheet.get.all'
-   },
-   'project.server.tasks.create_task': {
-      'queue': 'create_task', 
-      'routing_key': 'task.create_task'
-   },
-   'project.server.tasks.add': {
-      'queue': 'add', 
-      'routing_key': 'task.add'
-   }
-}
-task_queues = (
-   # Queue('default',    routing_key='task.create_task'),
-   Queue('get_all_sheets', routing_key='task.sheets.get.all'),
-   Queue('add', routing_key='task.add'),
-)
+
 beat_schedule = {
-   # 'add-every-30-seconds': {
-   #    'task': 'project.server.tasks.add',
-   #    'schedule': crontab(),
-   #    'args': (16, 16),
-   #    # 'options': {
-   #    #    'expires': 15.0,
-   #    # },
-   # },
+   'test-add': {
+      'task': 'add',
+      'schedule': crontab(minute='*/5'),
+      'args': (1, 1),
+      # 'options': {
+      #    'expires': 15.0,
+      # },
+   },
+   'test-end-to-end-insert-table': {
+      'task': 'smartsheet_get_all_sheets',
+      'schedule': crontab(),
+      'args': (),
+      # 'options': {
+      #    'expires': 15.0,
+      # },
+   },
 }

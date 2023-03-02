@@ -31,16 +31,16 @@ task_routes = {
 }
 task_queues = (
    # Queue('default',    routing_key='task.create_task'),
-   Queue('get_all_sheets', routing_key='task.sheet.get.all'),
+   Queue('get_all_sheets', routing_key='task.sheets.get.all'),
    Queue('add', routing_key='task.add'),
 )
 beat_schedule = {
-   'add-every-30-seconds': {
-      'task': 'project.server.tasks.add',
-      'schedule': crontab(),
-      'args': (16, 16),
-      # 'options': {
-      #    'expires': 15.0,
-      # },
-   },
+   # 'add-every-30-seconds': {
+   #    'task': 'project.server.tasks.add',
+   #    'schedule': crontab(),
+   #    'args': (16, 16),
+   #    # 'options': {
+   #    #    'expires': 15.0,
+   #    # },
+   # },
 }

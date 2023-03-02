@@ -3,7 +3,8 @@ import time
 from flask import jsonify
 
 from project.server.celery import celery
-from project.server.smartsheet.controller import return_controller
+from project.server.smartsheet.sheets.controller import init_get_all_sheets
+from project.server.smartsheet.syngentadirect.controller import init_get_sheet_syngenta_direct
 
 
 # Below are test processing workers.
@@ -20,23 +21,24 @@ def create_task(task_type):
 @celery.task
 def add(x, y):
     z = x + y
-    print(z)
 
 
 # Below are the daughters of Smartsheet data processing workers.
 @celery.task(
     name="smartsheet_get_all_sheets",
     queue="get_all_sheets",
-    routing_key="task.sheet.get.all",
+    routing_key="task.sheets.get.all",
 )
 def get_all_sheets():
-    _proccess = return_controller()
-    print(_proccess)
+    proccess_sheets = init_get_all_sheets()
     return "TESTE"
 
 
-# @celery.task(name="smartsheet_get_sheets", queue='get_sheets', routing_key='task.sheet')
-# def init_sheet():
-#     teste = get_data()
-#     print(teste)
-#     return ("TESTE")
+@celery.task(
+    name="smartsheet_get_sheet_syngenta_direct",
+    queue="get_sheet_syngenta_direct",
+    routing_key="task.sheet.syngenta.direct",
+)
+def get_sheet_syngenta_direct():
+    proccess_syngenta_direct = init_get_sheet_syngenta_direct()
+    return "TESTE"

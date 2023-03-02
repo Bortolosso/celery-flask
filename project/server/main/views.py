@@ -32,12 +32,23 @@ def get_status(task_id):
     return jsonify(result), 200
 
 
-# Route o run workes SmartSheet
-@main_blueprint.route("/smartsheet/get-all-sheets", methods=["POST"])
+#### Route o run workes SmartSheet
+
+@main_blueprint.route("/smartsheet/sheets", methods=["POST"])
 def smartsheet_get_all_sheets():
+    content = request.json
+
+    task_ = get_all_sheets.apply_async()
+    # task_ = get_all_sheets()
+
+    return jsonify({"task_id": "get_all_sheets"}), 202
+
+
+@main_blueprint.route("/smartsheet/sheet-syngenta-direct", methods=["POST"])
+def smartsheet_get_sheet_syngenta_direct():
     content = request.json
 
     # task_ = get_all_sheets.delay()
     task_ = get_all_sheets()
 
-    return jsonify({"task_id": "task_"}), 202
+    return jsonify({"task_id": "get_sheet_syngenta_dinamic"}), 202

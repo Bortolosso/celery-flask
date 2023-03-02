@@ -34,7 +34,7 @@ services:
 
   worker:
     build: .
-    command: celery --app project.server.tasks.celery worker --loglevel=info --logfile=project/logs/celery.log
+    command: celery --app project.server.tasks.celery worker --loglevel=info
     volumes:
       - .:/usr/src/app
     environment:
@@ -48,7 +48,7 @@ services:
 
   celery-queues:
     build: .
-    command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=SMARSHEET_GET_ALL_SHEETS@%h
+    command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=SMARTSHEET_SHEETS@%h
     volumes:
       - .:/usr/src/app
     environment:

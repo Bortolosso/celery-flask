@@ -4,12 +4,16 @@ from datetime import datetime
 
 from project.server.smartsheet.api import request_sheet_syngenta_direct
 from project.server.dbconnect import connect_db_pyodbc
+from project.server.scripts.smartsheet.convertjsontoinsertquery import convert
 
 def init_get_sheet_syngenta_direct():
     
-    id_sheet = os.environ.get("SHEET_ID_SYNGENTA_DIRECT", "")
-    response_data = request_sheet_syngenta_direct(id_sheet)
+    response_data = request_sheet_syngenta_direct(os.environ.get("SHEET_ID_SYNGENTA_DIRECT", ""))
+    rows = response_data['rows']
     
+    # convert_json_to_query_create_table = convert(response_data['columns'])
+    
+    print(rows)
     # conn = connect_db_pyodbc()
     # cursor = conn.cursor()
     
@@ -23,5 +27,4 @@ def init_get_sheet_syngenta_direct():
     # cursor.commit()
     # cursor.close()
 
-    row = True
-    return(row)
+    return True

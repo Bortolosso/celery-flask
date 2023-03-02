@@ -4,10 +4,10 @@ import json
 
 
 def request_all_sheets():
-   url = os.environ.get("SMARTSHEET_MAIN_API", "https://api.smartsheet.com/2.0/sheets")
+   url = os.environ.get("SMARTSHEET_MAIN_API", "")
    payload = ""
    headers = {
-      "Authorization": os.environ.get("SMARTSHEET_AUTH_TOKEN_API", "Authorization Bearer QjhvDfbr66ag0FKz1dIi6WpZqv95bMwdMbHqk")
+      "Authorization": os.environ.get("SMARTSHEET_AUTH_TOKEN_API", "")
    }
    response = requests.request("GET", url, data=payload, headers=headers)
    
@@ -15,11 +15,10 @@ def request_all_sheets():
 
 
 def request_sheet_syngenta_direct(id_sheet):
-   print(id_sheet)
-   url = os.environ.get("SMARTSHEET_MAIN_API", "https://api.smartsheet.com/2.0/sheets")
+   url = os.environ.get("SMARTSHEET_MAIN_API", "") + id_sheet
    payload = ""
    headers = {
-      "Authorization": os.environ.get("SMARTSHEET_AUTH_TOKEN_API", "Authorization Bearer QjhvDfbr66ag0FKz1dIi6WpZqv95bMwdMbHqk")
+      "Authorization": os.environ.get("SMARTSHEET_AUTH_TOKEN_API", "")
    }
    response = requests.request("GET", url, data=payload, headers=headers)
    

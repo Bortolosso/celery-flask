@@ -28,7 +28,6 @@ def query_select_test():
     cursor = conn.cursor()
     cursor.execute(QUERY_TEST)
     row = cursor.fetchall()
-    print(row)
     cursor.close()
 
 

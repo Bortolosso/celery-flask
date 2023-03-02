@@ -1,4 +1,3 @@
-from kombu import Queue
 from celery.schedules import crontab
 
 import os
@@ -17,20 +16,20 @@ task_default_routing_key = "tasks.default"
 task_default_queue = 'default'
 
 beat_schedule = {
-   'test-add': {
-      'task': 'add',
-      'schedule': crontab(minute='*/5'),
-      'args': (1, 1),
-      # 'options': {
-      #    'expires': 15.0,
-      # },
-   },
-   'test-end-to-end-insert-table': {
-      'task': 'smartsheet_get_all_sheets',
-      'schedule': crontab(),
-      'args': (),
-      # 'options': {
-      #    'expires': 15.0,
-      # },
-   },
+   # 'test-add': {
+   #    'task': 'add',
+   #    'schedule': crontab(minute='*/5'),
+   #    'args': (1, 1),
+   #    # 'options': {
+   #    #    'expires': 15.0,
+   #    # },
+   # },
+   # 'test-end-to-end-insert-table': {
+   #    'task': 'smartsheet_get_all_sheets',
+   #    'schedule': crontab(),
+   #    'args': (),
+   #    # 'options': {
+   #    #    'expires': 15.0,
+   #    # },
+   # },
 }

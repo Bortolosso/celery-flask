@@ -76,7 +76,7 @@ services:
 
   celery-queues-smartsheet_get_sheet_syngenta_direct:
     build: .
-    command: celery --app project.server.tasks.celery worker -Q smartsheet_get_sheet_syngenta_direct --hostname=SMARTSHEET_SHEET_SYNGENTA_DIRECT@%h
+    command: celery --app project.server.tasks.celery worker -Q get_sheet_syngenta_direct --hostname=SMARTSHEET_SHEET_SYNGENTA_DIRECT@%h
     volumes:
       - .:/usr/src/app
     environment:

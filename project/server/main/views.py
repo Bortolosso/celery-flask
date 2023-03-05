@@ -47,6 +47,6 @@ def smartsheet_get_all_sheets():
 @main_blueprint.route("/smartsheet/sheet-syngenta-direct", methods=["POST"])
 def smartsheet_get_sheet_syngenta_direct():
     content = request.json
-    task_ = get_sheet_syngenta_direct()
+    task_ = get_sheet_syngenta_direct.delay()
 
     return jsonify({"task_id": "get_sheet_syngenta_dinamic"}), 202

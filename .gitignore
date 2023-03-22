@@ -3,3 +3,7 @@ __pycache
 .DS_Store
 .vscode
 .env
+
+__pycache__
+celerybeat.pid
+celerybeat-schedule

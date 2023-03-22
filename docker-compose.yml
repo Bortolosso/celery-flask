@@ -34,7 +34,7 @@ services:
 
   worker:
     build: .
-    command: celery --app project.server.tasks.celery worker --loglevel=info
+    command: celery --app project.server.tasks.celery worker --loglevel=INFO --concurrency=10 -n __CELERY__@%h
     volumes:
       - .:/usr/src/app
     environment:
@@ -46,7 +46,7 @@ services:
       - web
       - redis
 
-  celery-queues-get_all_sheets:
+  celery-queue-get_all_sheets:
     build: .
     command: celery --app project.server.tasks.celery worker -Q get_all_sheets --hostname=SMARTSHEET_SHEETS@%h
     volumes:
@@ -59,10 +59,24 @@ services:
     depends_on:
       - web
       - redis
-
-  celery-queues-add:
+  
+  # celery-queue-add:
+  #   build: .
+  #   command: celery --app project.server.tasks.celery worker -Q add --hostname=TEST_ADD_REGISTERS_END_TO_END@%h
+  #   volumes:
+  #     - .:/usr/src/app
+  #   environment:
+  #     - FLASK_DEBUG=1
+  #     - APP_SETTINGS=project.server.config.DevelopmentConfig
+  #     - CELERY_BROKER_URL=redis://redis:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis:6379/0
+  #   depends_on:
+  #     - web
+  #     - redis
+  
+  celery-queue-salesforce_test:
     build: .
-    command: celery --app project.server.tasks.celery worker -Q add --hostname=TEST_ADD_REGISTERS_END_TO_END@%h
+    command: celery --app project.server.tasks.celery worker -Q test_contact_salesforce --hostname=SALESFORCE_TEST_CONTACT@%h
     volumes:
       - .:/usr/src/app
     environment:
@@ -73,10 +87,10 @@ services:
     depends_on:
       - web
       - redis
-
-  celery-queues-smartsheet_get_sheet_syngenta_direct:
+      
+  celery-queue-get_sheet_syngenta_direct_greenfield:
     build: .
-    command: celery --app project.server.tasks.celery worker -Q get_sheet_syngenta_direct --hostname=SMARTSHEET_SHEET_SYNGENTA_DIRECT@%h
+    command: celery --app project.server.tasks.celery worker -Q get_sheet_syngenta_direct_greenfield --hostname=SMARTSHEET_SHEET_SYNGENTA_DIRECT_GREENFIELD@%h
     volumes:
       - .:/usr/src/app
     environment:
@@ -90,6 +104,8 @@ services:
 
   redis:
     image: redis:7-alpine
+    ports:
+      - 6379:6379
 
   flower:
     build: .
